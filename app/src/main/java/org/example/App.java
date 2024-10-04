@@ -3,6 +3,8 @@
  */
 package org.example;
 
+import java.util.Scanner;
+
 public class App {
   public String getGreeting() {
     return "Welcome to my solutions!";
@@ -36,5 +38,21 @@ public class App {
     for (int i : answer) {
       System.out.println("insertion sorted data: " + i);
     }
+
+    /* test uppgift9 */
+    /*
+     * int[][] arr3 = {{1, 1, 2, 3, 3}, {2, 1, 1, 2, 3}, {3, 2, 2, 1, 2}, {3, 3, 3,
+     * 3, 3}};
+     * boolean[][] ans = lab10.survivalGame(arr3);
+     * for (int i = 0; i < ans.length; i++) {
+     * for (int j = 0; j < ans[i].length; j++) {
+     * System.out.println("row: " + i + " col: " + j + " value: " + ans[i][j]);
+     * }
+     * }
+     */
+
+    /* test uppgift10 */
+    Scanner scan = new Scanner(System.in);
+    lab10.dentistReception(scan);
   }
 }

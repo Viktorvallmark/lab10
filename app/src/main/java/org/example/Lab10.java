@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Scanner;
+
 /** Lab10 */
 public class Lab10 {
   /* Uppgift 6 */
@@ -95,9 +97,153 @@ public class Lab10 {
   /* uppgift 9 */
 
   public boolean[][] survivalGame(int[][] data) {
-    return null;
+
+    boolean[][] answer = new boolean[data.length][data[0].length];
+
+    for (int i = 0; i < data.length; i++) {
+      for (int j = 0; j < data[i].length; j++) {
+        int sum;
+        sum = 0;
+        for (int k = -1; k < 2; k++) {
+          for (int o = -1; o < 2; o++) {
+            if ((i + k >= 0)
+                && (i + k < data.length)
+                && (j + o >= 0)
+                && (j + o < data[i].length)
+                && !(k == 0 && o == 0)) {
+              sum += data[i + k][j + o];
+            }
+          }
+        }
+        if ((sum >= 15) || (data[i][j] >= 3)) {
+          answer[i][j] = false;
+        } else {
+          answer[i][j] = true;
+        }
+      }
+    }
+
+    return answer;
   }
 
   /* uppgift 10 */
+  private String buildReceipt(String[] freeCard) {
+    String receipt = "";
+    receipt += "------- Receipt -------\n\n";
+    for (String string : freeCard) {
+      receipt += string;
+    }
+    receipt += "\n-----------------------\n\n";
+    return receipt;
+  }
 
+  public void dentistReception(Scanner scan) {
+
+    int cost = 0;
+    int index = 0;
+    int choice;
+    String receipt = "";
+    boolean run = true;
+    String[][] treatment = {
+      {"Controll teeth", "600"}, {"Clean teeth", "300"}, {"Root canal", "1500"}
+    };
+    String[] freeCard = new String[10];
+
+    while (run) {
+
+      System.out.println(
+          "What do you want to do?: \n"
+              + " 0. Controll teeth. \n"
+              + " 1. Clean teeth \n"
+              + " 2. Root canal \n "
+              + "-1. Get invoice and exit");
+      // TODO: NoSuchElementException fix
+      choice = scan.nextInt();
+      switch (choice) {
+        case 0:
+          System.out.println(
+              "You chose: "
+                  + treatment[0][0]
+                  + " and the cost "
+                  + treatment[0][1]
+                  + "kr has been added.");
+          cost += Integer.parseInt(treatment[0][1]);
+          freeCard[index] = "Controll teeth          600kr\n\n";
+          index++;
+
+          if (index > 9) {
+            receipt += buildReceipt(freeCard);
+            receipt += "Cost                 " + cost + "kr\n";
+            if (cost >= 3000) {
+              receipt += "Discount             " + (cost - (cost * 0.9)) + "kr\n";
+            }
+            receipt += "Sum total            " + (cost * 0.9) + "kr\n";
+            System.out.println(receipt);
+            run = false;
+            break;
+          }
+          break;
+        case 1:
+          System.out.println(
+              "You chose: "
+                  + treatment[1][0]
+                  + " and the cost "
+                  + treatment[1][1]
+                  + "kr has been added.");
+          cost += Integer.parseInt(treatment[1][1]);
+          freeCard[index] = "Clean teeth          300kr\n\n";
+          index++;
+
+          if (index > 9) {
+            receipt += buildReceipt(freeCard);
+            receipt += "Cost                 " + cost + "kr\n";
+            if (cost >= 3000) {
+              receipt += "Discount             " + (cost - (cost * 0.9)) + "kr\n";
+            }
+            receipt += "Sum total            " + (cost * 0.9) + "kr\n";
+            System.out.println(receipt);
+            run = false;
+            break;
+          }
+          break;
+        case 2:
+          System.out.println(
+              "You chose: "
+                  + treatment[2][0]
+                  + " and the cost "
+                  + treatment[2][1]
+                  + "kr has been added.");
+          cost += Integer.parseInt(treatment[2][1]);
+          freeCard[index] = "Root canal          1500kr\n\n";
+          index++;
+
+          if (index > 9) {
+            receipt += buildReceipt(freeCard);
+            receipt += "Cost                 " + cost + "kr\n";
+            if (cost >= 3000) {
+              receipt += "Discount             " + (cost - (cost * 0.9)) + "kr\n";
+            }
+            receipt += "Sum total            " + (cost * 0.9) + "kr\n";
+            System.out.println(receipt);
+            run = false;
+            break;
+          }
+          break;
+        case -1:
+          receipt += buildReceipt(freeCard);
+          receipt += "Cost                 " + cost + "kr";
+          if (cost >= 3000) {
+            receipt += "Discount             " + (cost * 0.9) + "kr";
+          }
+          receipt += "Sum total            " + (cost - (cost * 0.9)) + "kr";
+          System.out.println(receipt);
+
+          run = false;
+          break;
+        default:
+          System.out.println("Something went horribly wrong in the event loop");
+          break;
+      }
+    }
+  }
 }
